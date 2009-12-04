@@ -11,17 +11,23 @@
 	</head>
 	<body onload="javascript:init();">
 		<div class="header">phonegap symbian.wrt</div>
-		<div class="menu">
-			<div class="menu-item" onclick="changeView(event);">LOCATION</div>
-			<div class="menu-item" onclick="changeView(event);">ACCEL</div>
-			<div id="mnu-cont" class="menu-item selected" onclick="changeView(event);">CONTACTS</div>
-			<div class="menu-item" onclick="changeView(event);">ORIENT</div>
-			<div class="menu-item" onclick="changeView(event);">SOUND</div>
-			<div class="menu-item" onclick="changeView(event);">SMS</div>
-			<div class="menu-item" onclick="changeView(event);">CAMERA</div>
-			<div class="menu-item" onclick="changeView(event);">STORAGE</div>
-			<div class="menu-item" onclick="changeView(event);">NOTIFY</div>
-		</div>
+		<table class="menu">
+			<tr>
+			<td class="menu-item" onclick="changeView(event);">LOCATION</td>
+			<td class="menu-item" onclick="changeView(event);">ACCEL</td>
+			<td id="mnu-cont" class="menu-item selected" onclick="changeView(event);">CONTACTS</td>
+			</tr>
+			<tr>
+			<td class="menu-item" onclick="changeView(event);">ORIENT</td>
+			<td class="menu-item" onclick="changeView(event);">SOUND</td>
+			<td class="menu-item" onclick="changeView(event);">SMS</td>
+			</tr>
+			<tr>
+			<td class="menu-item" onclick="changeView(event);">CAMERA</td>
+			<td class="menu-item" onclick="changeView(event);">STORAGE</td>
+			<td class="menu-item" onclick="changeView(event);">NOTIFY</td>
+			</tr>
+		</table>
 		<div id="LOCATION" class="view" style="display:none;">
 		<a href="javascript:getLocation();">get location</a>
 		<div class="list">

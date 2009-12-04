@@ -1,29 +1,26 @@
 body {
-	width: 				360px;
+	width: 				100%;
 	height: 			620px;
 	font-family: 		Helvetica;
 	margin:				0px;
-	font-size:			16pt;
+	font-size:			12pt;
 }
 
 .header {
 	width:				100%;
 	text-align:			center;
-	font-size:			27pt;
-	padding:			20px 0px;
+	font-size:			24pt;
+	padding:			5% 0px;
 }
 
 .menu {
 	width:				100%;
 	height:				120px;
-	font-size:			18pt;
+	border-collapse:	collapse;
 }
 .menu-item {
-	width:				118px;
 	height:				25px;
 	text-align:			center;
-	float:				left;
-	padding:			5px 0px;
 	background-color:	#0F659C;
 	border:				1px solid white;
 }
