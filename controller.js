@@ -89,11 +89,10 @@ function getNonEmptyNumber(contact) {
 	return contact.phones[0];
 }
 
-function vibrate() {
-	try {
-		navigator.notification.vibrate(2000);
-	} catch (ex) {
-		alert(ex.name + ": " + ex.message);
+function notify(type) {
+	switch (type) {
+		case 'vib':navigator.notification.vibrate(2000); break;
+		case 'alert':navigator.notification.alert("This is a custom message.", "Custom title", "Custom OK");
 	}
 }
 
@@ -128,8 +127,11 @@ function displayStatus(status) {
 }
 
 function sendSMS() {
+	try{
 	var number = document.getElementById('sms_number').value;
-	navigator.sms.send(number, "I love scotch. scotch scotch scotch", smsSuccess, smsFailure);
+	var msg = document.getElementById('sms_message').value;
+	navigator.sms.send(number, msg, smsSuccess, smsFailure);
+} catch (ex) { debug.log(ex.name + ": " + ex.message); }
 }
 
 function smsSuccess() {
@@ -138,6 +140,14 @@ function smsSuccess() {
 
 function smsFailure() {
 	document.getElementById("sms_status").innerHTML = "failed";
+}
+
+function call() {
+	var number = document.getElementById("phone_number").value;
+	if (isNaN(number))
+		navigator.notification.alert("", "Invalid Number", "OK");
+	else
+		navigator.telephony.send(number);
 }
 
 function takePicture() {
@@ -154,7 +164,17 @@ function cameraFailure(error) {
 }
 
 function updateOrientation(orientation) {
-	document.getElementById("orientation").innerHTML = orientation;
+	debug.log(orientation + "=" + DisplayOrientation.PORTRAIT);
+	var output = "";
+	switch (orientation) {
+		case DisplayOrientation.PORTRAIT: output = "portrait"; break;
+		case DisplayOrientation.REVERSE_PORTRAIT: output = "reverse portrait"; break;
+		case DisplayOrientation.LANDSCAPE_LEFT_UP: output = "landscape left up"; break;
+		case DisplayOrientation.LANDSCAPE_RIGHT_UP: output = "landscape right up"; break;
+		case DisplayOrientation.FACE_UP: output = "face up"; break;
+		case DisplayOrientation.FACE_DOWN: output = "face down"; break;
+	}
+	document.getElementById("orientation").innerHTML = output;
 }
 
 function checkStorage() {

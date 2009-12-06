@@ -4,6 +4,7 @@
 	<head>
 		<title>PhoneGap Symbian.WRT</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<script language="javascript" type="text/javascript" src="/usr/palm/frameworks/mojo/mojo.js" x-mojo-version="1"></script>
 		<script language="javascript" type="text/javascript" src="phonegap.js"></script>
 		<script language="javascript" type="text/javascript" src="controller.js"></script>
 		<link rel="stylesheet" href="assets/master.css" type="text/css" media="screen" title="no title" charset="utf-8">		
@@ -26,6 +27,11 @@
 			<td class="menu-item" onclick="changeView(event);">CAMERA</td>
 			<td class="menu-item" onclick="changeView(event);">STORAGE</td>
 			<td class="menu-item" onclick="changeView(event);">NOTIFY</td>
+			</tr>
+			<tr>
+			<td class="menu-item" onclick="changeView(event);">TEL</td>
+			<td class="menu-item"></td>
+			<td class="menu-item"></td>
 			</tr>
 		</table>
 		<div id="LOCATION" class="view" style="display:none;">
@@ -53,12 +59,13 @@
 		</div>
 		<div id="CONTACTS" class="view" style="display:block;">
 		filter:<input id="contact-filter" name="contact-filter"/>
-		<a href="javascript:getContacts();">get contacts</a><br/>
+		<a href="javascript:getContacts();"><br/>get contacts</a><br />
 		<div id="contacts" class="contacts"></div>
 		</div>
 		<div id="NOTIFY" class="view" style="display:none;">
 		Notification
-		<div class="list-item"><a href="javascript:vibrate();">vibrate</a></div>
+		<div class="list-item"><p><a href="javascript:notify('vib');">vibrate</a></p></div>
+		<div class="list-item"><p><a href="javascript:notify('alert');">alert</a></p></div>
 		</div>
 		<div id="SOUND" class="view" style="display:none;">
 		Sound
@@ -71,7 +78,7 @@
 			<div class="list-item">
 				number: <input id="sms_number" type="text" /><br/>
 				message:<br/>
-				<textarea rows=3 />
+				<textarea id="sms_message" cols=3 style="width:90%"></textarea>
 				<a href="javascript:sendSMS()">Send SMS</a><br/>
 				<span id="sms_status"></span>
 			</div>
@@ -85,11 +92,18 @@
 		</div>
 		<div id="STORAGE" class="view" style="display:none;">
 			<a href="javascript:checkStorage()">check storage</a><br/>
-			<div class="list-item"><input id="storage_string" type="text" /><br/>
+			<div class="list-item">
+				<input id="storage_string" type="text" /><br/>
 				<a href="javascript:testStorage('store');">Store this</a><br/>
 				<a href="javascript:testStorage('clear');">Clear this</a>
 			</div>
 			<div class="list-item"><label id="storage_output"></label></div>
+		</div>
+		<div id="TEL" class="view" style="display:none;">
+			<p> yo
+				<input id="phone_number" type="text" /><br/>
+				<a href="javascript:call();">Call</a>
+			</p>
 		</div>
 		<a href="javascript:widget.openURL('http://www.nitobi.com');"><img src="assets/nitobi-avatar.png" class="nitobi-logo" /></a>
 	</body>
