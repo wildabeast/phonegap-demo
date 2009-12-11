@@ -3,6 +3,7 @@ var displayState = 0;
 var accel_watch_id;
 var CURRENT_VIEW = "CONTACTS";
 var current_menu = null;
+var myMedia = null;
 
 function init() {
 	current_menu = document.getElementById("mnu-cont");
@@ -10,9 +11,9 @@ function init() {
 
 var changeView = function (e) {
 	if (current_menu)
-		current_menu.className = "menu-item";
+		current_menu.className = "";
 	current_menu = e.target;
-	e.target.className = "menu-item selected";
+	e.target.className = "menu-selected";
 	var id = e.target.innerHTML;
 	document.getElementById(CURRENT_VIEW).style.display = "none";
 	document.getElementById(id).style.display = "block";
@@ -65,8 +66,8 @@ function watchOrientation() {
 
 function getContacts() {
 	var filter = document.getElementById("contact-filter").value;
-	navigator.contacts.find({ name: filter }, displayContacts, function(){
-		alert('getallcontacts fail');
+	navigator.contacts.find({ name: filter }, displayContacts, function(error){
+		document.getElementById('contacts_list').innerHTML = "<p>" + error.message + "</p>";
 	}, { limit:200, page:1 });
 }
 
@@ -78,7 +79,7 @@ function displayContacts(contacts) {
 					"<span class='list-item-small'> Phone(" + phone.type + "): " + phone.number +
 					"</div>";
 	}
-	document.getElementById('contacts').innerHTML = output;
+	document.getElementById('contacts_list').innerHTML = output;
 }
 
 function getNonEmptyNumber(contact) {
@@ -91,8 +92,10 @@ function getNonEmptyNumber(contact) {
 
 function notify(type) {
 	switch (type) {
-		case 'vib':navigator.notification.vibrate(2000); break;
-		case 'alert':navigator.notification.alert("This is a custom message.", "Custom title", "Custom OK");
+		case 'vib1':navigator.notification.vibrate(2000,100); break;
+		case 'vib2':navigator.notification.vibrate(5000,10); break;
+		case 'alert':navigator.notification.alert("This is a custom message.", "Custom title", "Custom OK");break;
+		case 'beep':navigator.notification.beep();break;
 	}
 }
 
@@ -156,15 +159,14 @@ function takePicture() {
 
 function cameraSuccess(imageUrls) {
 	//this is an array of all the photos taken while the camera app was open
-	document.getElementById('preview').innerHTML = "<img class=\"img_preview\" src=\"" + imageUrls[0] + "\" alt=\"\" />";
+	document.getElementById("preview").innerHTML = "<img src='" + imageUrls[0]  + "' class='preview'/>";
 }
 
-function cameraFailure(error) {
-	alert("camera fail: " + error.name + " - " + error.message);
+function cameraFailure() {
+	document.getElementById("preview").innerHTML = "camera error";
 }
 
 function updateOrientation(orientation) {
-	debug.log(orientation + "=" + DisplayOrientation.PORTRAIT);
 	var output = "";
 	switch (orientation) {
 		case DisplayOrientation.PORTRAIT: output = "portrait"; break;
@@ -177,6 +179,20 @@ function updateOrientation(orientation) {
 	document.getElementById("orientation").innerHTML = output;
 }
 
+function soundCommand(cmd) {
+	debug.log(Media);
+	
+//	if (myMedia == null)
+//		myMedia = new Media("beep.mp3");
+	if (cmd == "play") {
+		navigator.media.play("song.mp3");
+	} else if (cmd == "pause") {
+		navigator.media.pause();
+	} else if (cmd == "stop") {
+		navigator.media.stop();
+	}
+}
+
 function checkStorage() {
 	var store = navigator.storage.getItem("store_test");
 	if (store) {
@@ -187,7 +203,6 @@ function checkStorage() {
 function testStorage(mode) {
 	try {
 		if (mode == 'store') {
-
 			navigator.storage.setItem("store_test", document.getElementById("storage_string").value);
 		}
 		else {
@@ -196,4 +211,10 @@ function testStorage(mode) {
 	} catch (ex) {
 		alert(ex.name + ": " + ex.message);
 	}
+}
+
+function showMap() {
+	navigator.geolocation.getCurrentPosition( function(position) {
+		navigator.map.show(position);
+	}, function () { debug.log("mapping error"); })
 }

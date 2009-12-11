@@ -15,16 +15,17 @@ body {
 
 .menu {
 	width:				100%;
-	height:				120px;
 	border-collapse:	collapse;
 }
-.menu-item {
-	height:				25px;
+.menu tr {
+	height:40px;
+}
+.menu td {
 	text-align:			center;
 	background-color:	#0F659C;
 	border:				1px solid white;
 }
-.selected {
+.menu td.menu-selected {
 	background-color:	#78B2D1;
 }
 
@@ -32,12 +33,8 @@ body {
 	padding-top:		20px;
 }
 
-.list {
-	width:				100%;
-}
-
-.list-item {
-	padding:			8px 2px;
+ul {
+	list-style-type:	none;
 }
 
 .list-item-small {
@@ -58,6 +55,7 @@ body {
 	width:				35px;
 }
 
-.img_preview {
-	width:				340px;
+.preview {
+	width:				300px;
+	margin:				10px;
 }
