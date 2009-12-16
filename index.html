@@ -7,116 +7,153 @@
 		<script language="javascript" type="text/javascript" src="/usr/palm/frameworks/mojo/mojo.js" x-mojo-version="1"></script>
 		<script language="javascript" type="text/javascript" src="phonegap.js"></script>
 		<script language="javascript" type="text/javascript" src="controller.js"></script>
+		<script language="javascript" type="text/javascript" src="js/prototype.js"></script>
+		<script language="javascript" type="text/javascript" src="js/scriptaculous.js?load=effects"></script>
 		<link rel="stylesheet" href="assets/master.css" type="text/css" media="screen" title="no title" charset="utf-8">		
     	<META NAME="Generator" CONTENT="Nokia WRT plug-in for Aptana Studio 2.0.0" />
 	</head>
-	<body onload="javascript:init();">
+	<body>
+		<div class="body">
+			
 		<div class="header">phonegap demo</div>
-		<table class="menu">
-			<tr >
-			<td onclick="changeView(event);">ACCEL</td>
-			<td onclick="changeView(event);">CAMERA</td>
-			<td class="menu-selected" onclick="changeView(event);" id="mnu-cont">CONTACTS</td>
-			</tr>
-			<tr>
-			<td onclick="changeView(event);">LOCATION</td>
-			<td onclick="changeView(event);">MAPS</td>
-			<td onclick="changeView(event);">NOTIFY</td>
-			</tr>
-			<tr>
-			<td onclick="changeView(event);">ORIENT</td>
-			<td onclick="changeView(event);">SMS</td>
-			<td onclick="changeView(event);">SOUND</td>
-			</tr>
-			<tr>
-			<td onclick="changeView(event);">STORAGE</td>
-			<td onclick="changeView(event);">TEL</td>
-			<td onclick="changeView(event);"></td>
-			</tr>
-		</table>
-		<div id="LOCATION" class="view" style="display:none;">
-			<p>
-				<a href="javascript:getLocation();">get location</a>
-				<ul>
-				<li>latitude: <span id="latitude">-</span></li>
-				<li>longitude: <span id="longitude">-</span></li>
-				<li>altitude: <span id="altitude">-</span></li>
-				<li>heading: <span id="heading">-</span></li>
-				<li>speed: <span id="speed">-</span></li>
-	            <li>timestamp: <span id="timestamp">-</li></span>
-				</ul>
-			</p>
+		<div><a href="#"><img src="assets/nitobi-avatar.png" class="nitobi-logo" /></a><div>
+		
+		<div>
+			<div id="menu-accel" class="menu-item" onclick="changeView(event);"><span>Acceleration</span></div>
+			<div id="view-accel" class="view" style="display:none;">
+				
+				<div class="button" onclick="watchAccel()">watch</div>
+				<p>
+					<ul>
+					<li>X-Accel: <span id="accel_x"></span></li>
+					<li>Y-Accel: <span id="accel_y"></span></li>
+					<li>Z-Accel: <span id="accel_z"></span></li>
+					</ul>
+				</p>
+				<div class="button-small" onclick="back()">back</div>
+			</div>
 		</div>
-		<div id="ACCEL" class="view" style="display:none;">
-			<p>
-				<a href="javascript:watchAccel()">watch acceleration</a><br/><br/>
-				<ul>
-				<li>X-Accel: <span id="accel_x"></span></li>
-				<li>Y-Accel: <span id="accel_y"></span></li>
-				<li>Z-Accel: <span id="accel_z"></span></li>
-				</ul>
-			</p>
+		
+		<div>
+		<div id="menu-camera" class="menu-item" onclick="changeView(event);"><span>Camera</span></div>
+		<div id="view-camera" class="view" style="display:none;">
+			<div class="button" onclick="takePicture()">take picture</div>
+			<div id="preview"></div>
+			<div class="button-small" onclick="back()">back</div>
 		</div>
-		<div id="ORIENT" class="view" style="display:none;">
-			<a href="javascript:watchOrientation();">watch orientation</a>
-			<p>Current orientation:&nbsp;<label id="orientation"> - </label></p>
 		</div>
-		<div id="CONTACTS" class="view" style="display:block;">
+		
+		<div>
+		<div id="menu-contacts" class="menu-item" class="menu-selected" onclick="changeView(event);"><span>Contacts</span></div>
+		<div id="view-contacts" class="view" style="display:none;">
 			<p>
 				filter:&nbsp;<input id="contact-filter" name="contact-filter"/><br/>
-				<a href="javascript:getContacts();">get contacts</a>
+				<div class="button" onclick="getContacts()">get contacts</div>
 			</p>
 			<div id="contacts_list" class="contacts"></div>
+			<div class="button-small" onclick="back()">back</div>
 		</div>
-		<div id="NOTIFY" class="view" style="display:none;">
-			<p><a href="javascript:notify('vib1');">VIBRATE 1</a></p>
-			<p><a href="javascript:notify('vib2');">VIBRATE 2</a></p>
-			<p><a href="javascript:notify('beep');">BEEP</a></p>
-			<p><a href="javascript:notify('alert');">ALERT</a></p>
 		</div>
-		<div id="SOUND" class="view" style="display:none;">
+		
+		<div>
+			<div id="menu-location" class="menu-item" onclick="changeView(event);"><span>Location</span></div>
+			<div id="view-location" class="view" style="display:none;">
+				<div class="button" onclick="getLocation()">watch location</div>
+				<p>
+					<ul>
+					<li>latitude: <span id="latitude">-</span></li>
+					<li>longitude: <span id="longitude">-</span></li>
+					<li>altitude: <span id="altitude">-</span></li>
+					<li>heading: <span id="heading">-</span></li>
+					<li>speed: <span id="speed">-</span></li>
+		            <li>timestamp: <span id="timestamp">-</span></li>
+					</ul>
+				</p>
+				<div class="button-small" onclick="back()">back</div>
+			</div>
+		</div>
+		
+		<div>
+		<div id="menu-maps" class="menu-item" onclick="changeView(event);"><span>Maps</span></div>
+		<div id="view-maps" class="view" style="display:none">
+			<div class="button" onclick="showMap()">show map</div>
+			<div class="button-small" onclick="back()">back</div>
+		</div>
+		</div>
+		
+		<div>
+		<div id="menu-notify" class="menu-item" onclick="changeView(event);"><span>Notification</span></div>
+		<div id="view-notify" class="view" style="display:none;">
+			<div class="button" onclick="notify('vib1')">vibrate 1</div>
+			<div class="button" onclick="notify('vib2')">vibrate 2</div>
+			<div class="button" onclick="notify('beep')">play beep</div>
+			<div class="button" onclick="notify('alert')">show alert</div>
+			<div class="button-small" onclick="back()">back</div>
+		</div>
+		</div>
+		
+		<div>
+		<div id="menu-orient" class="menu-item" onclick="changeView(event);"><span>Orientation</span></div>
+		<div id="view-orient" class="view" style="display:none;">
+			<div class="button" onclick="watchOrientation()">watch orientation</div>
+			<p>Current orientation:&nbsp;<label id="orientation"> - </label></p>
+			<div class="button-small" onclick="back()">back</div>
+		</div>
+		</div>
+		
+		<div>
+		<div id="menu-sms" class="menu-item" onclick="changeView(event);"><span>Sms</span></div>
+		<div id="view-sms" class="view" style="display:none;">
 			<p>
-				<a href="javascript:navigator.media.play('assets/song.mp3');">PLAY</a><br/>
-				<a href="javascript:navigator.media.pause();">PAUSE</a><br/>
-				<a href="javascript:navigator.media.stop()">STOP</a>
-			</p>
-		</div>
-		<div id="SMS" class="view" style="display:none;">
-			<p>
-				number:&nbsp;<input id="sms_number" type="text" /><br/>
+				number:<br/>
+				<input id="sms_number" type="text" /><br/>
 				message:<br/>
-				<textarea rows=3></textarea>
-				<a href="javascript:sendSMS()">Send SMS</a><br/>
+				<textarea id="sms_message" rows=3></textarea>
+				<div class="button" onclick="sendSMS()">send sms</div>
 				<span id="sms_status"></span>
 			</p>
+			<div class="button-small" onclick="back()">back</div>
 		</div>
-		<div id="CAMERA" class="view" style="display:none;">
-			<p>
-				<a href="javascript:takePicture();">Take picture</a>
-				<div id="preview"></div>
-			</p>
 		</div>
-		<div id="STORAGE" class="view" style="display:none;">
+		
+		<div>
+		<div id="menu-sound" class="menu-item" onclick="changeView(event);"><span>Sound</span></div>
+		<div id="view-sound" class="view" style="display:none;">
 			<p>
-				<a href="javascript:checkStorage()">check storage</a><br/>
-				<input id="storage_string" type="text" /><br/>
-				<a href="javascript:testStorage('store');">Store this</a><br/>
-				<a href="javascript:testStorage('clear');">Clear this</a>
+				<div class="button" onclick="navigator.media.play('assets/song.mp3');">play</div>
+				<div class="button" onclick="navigator.media.pause();">pause</div>
+				<div class="button" onclick="navigator.media.stop()">stop</div>
 			</p>
+			<div class="button-small" onclick="back()">back</div>
+		</div>
+		</div>
+		
+		<div>
+		<div id="menu-storage" class="menu-item" onclick="changeView(event);"><span>Storage</span></div>
+		<div id="view-storage" class="view" style="display:none;">
+			<p>data:<input id="storage_string" type="text" /><br/></p>
+			<div class="button" onclick="testStorage('store');">store data</div>
+			<div class="button" onclick="testStorage('clear');">clear data</div>
+			<div class="button" onclick="checkStorage()">check storage</div>
 			<p><label id="storage_output"></label></p>
+			<div class="button-small" onclick="back()">back</div>
 		</div>
-		<div id="TEL" class="view" style="display:none;">
+		</div>
+		
+		<div>
+		<div id="menu-tel" class="menu-item" onclick="changeView(event);"><span>Telephony</span></div>
+		<div id="view-tel" class="view" style="display:none;">
 			<p>
 				number:&nbsp;<input id="phone_number" type="text" /><br/>
-				<a href="javascript:call()">CALL</a>
+				<div class="button" onclick="call()">call</div>
 			</p>
+			<div class="button-small" onclick="back()">back</div>
 		</div>
-		<div id="MAPS" class="view" style="display:none">
-			<p>
-				<a href="javascript:showMap();">SHOW MAP</a>
-			</p>
 		</div>
-		<a href="#"><img src="assets/nitobi-avatar.png" class="nitobi-logo" /></a>
+		
+		<div id="spacer" style="display:none"></div>
+		
+		</div>
 	</body>
 </html>
  

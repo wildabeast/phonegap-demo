@@ -1,23 +1,39 @@
 var timeout = null;
 var displayState = 0;
 var accel_watch_id;
-var CURRENT_VIEW = "CONTACTS";
+var current_view = null;
 var current_menu = null;
 var myMedia = null;
 
 function init() {
-	current_menu = document.getElementById("mnu-cont");
 }
 
 var changeView = function (e) {
-	if (current_menu)
-		current_menu.className = "";
-	current_menu = e.target;
-	e.target.className = "menu-selected";
-	var id = e.target.innerHTML;
-	document.getElementById(CURRENT_VIEW).style.display = "none";
-	document.getElementById(id).style.display = "block";
-	CURRENT_VIEW = id;
+	try {
+		if (current_view) {
+			Effect.BlindUp(current_view);
+		}
+		var menuId = e.currentTarget.id;
+		if (menuId == current_menu) {
+			current_view = current_menu = null;
+			return;
+		}
+		var viewId = $(menuId).next().id;
+		$("spacer").setStyle({ display:"block" });
+		window.location = "#" + menuId;
+		Effect.BlindDown(viewId);
+		current_menu = menuId;
+		current_view = viewId;
+	
+		setTimeout('$("spacer").setStyle({ display:"none" });', 1000);
+	} catch (ex) { debug.log(ex.name + ": " + ex.message) }
+}
+
+function back() {
+	if (current_view) {
+		Effect.BlindUp(current_view);
+	}
+	current_view = null;
 }
 
 function getLocation() {
@@ -53,15 +69,28 @@ function watchAccel() {
 }
 
 function updateAcceleration(accel) {
-	document.getElementById('accel_x').innerHTML = accel.x;
-	document.getElementById('accel_y').innerHTML = accel.y;
-	document.getElementById('accel_z').innerHTML = accel.z;
+	document.getElementById('accel_x').innerHTML = ("" + accel.x).substring(0,8);
+	document.getElementById('accel_y').innerHTML = ("" + accel.y).substring(0,8);
+	document.getElementById('accel_z').innerHTML = ("" + accel.z).substring(0,8);
 }
 
 function watchOrientation() {
 	var options = new Object();
 	options.frequency = 1000;
-	navigator.orientation.watchOrientation(updateOrientation, null, options);
+	navigator.orientation.watchOrientation(updateOrientation, function () { debug.log("orientation error") }, options);
+}
+
+function updateOrientation(orientation) {
+	var output = "";
+	switch (orientation) {
+		case DisplayOrientation.PORTRAIT: output = "portrait"; break;
+		case DisplayOrientation.REVERSE_PORTRAIT: output = "reverse portrait"; break;
+		case DisplayOrientation.LANDSCAPE_LEFT_UP: output = "landscape left up"; break;
+		case DisplayOrientation.LANDSCAPE_RIGHT_UP: output = "landscape right up"; break;
+		case DisplayOrientation.FACE_UP: output = "face up"; break;
+		case DisplayOrientation.FACE_DOWN: output = "face down"; break;
+	}
+	document.getElementById("orientation").innerHTML = output;
 }
 
 function getContacts() {
@@ -164,19 +193,6 @@ function cameraSuccess(imageUrls) {
 
 function cameraFailure() {
 	document.getElementById("preview").innerHTML = "camera error";
-}
-
-function updateOrientation(orientation) {
-	var output = "";
-	switch (orientation) {
-		case DisplayOrientation.PORTRAIT: output = "portrait"; break;
-		case DisplayOrientation.REVERSE_PORTRAIT: output = "reverse portrait"; break;
-		case DisplayOrientation.LANDSCAPE_LEFT_UP: output = "landscape left up"; break;
-		case DisplayOrientation.LANDSCAPE_RIGHT_UP: output = "landscape right up"; break;
-		case DisplayOrientation.FACE_UP: output = "face up"; break;
-		case DisplayOrientation.FACE_DOWN: output = "face down"; break;
-	}
-	document.getElementById("orientation").innerHTML = output;
 }
 
 function soundCommand(cmd) {

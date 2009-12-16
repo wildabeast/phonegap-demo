@@ -1,46 +1,52 @@
 body {
+	margin:				0px;
+}
+
+.body {
 	width: 				100%;
-	height: 			620px;
 	font-family: 		Helvetica;
 	margin:				0px;
-	font-size:			12pt;
+	font-size:			16pt;
+	background-color:	#222222;
+	color:				#EEEEEE;
 }
 
 .header {
 	width:				100%;
 	text-align:			center;
-	font-size:			24pt;
+	font-size:			1.7em;
 	padding:			5% 0px;
 }
 
-.menu {
+.menu-item {
 	width:				100%;
-	border-collapse:	collapse;
+	height:				40px;
+	display:			block;
+	font-size:			1.5em;
+	padding:			10px 0px;
+	background:			url(item_bg.png) repeat-x;
 }
-.menu tr {
-	height:40px;
+.menu-item span {
+	margin:				0px 10px;
 }
-.menu td {
-	text-align:			center;
-	background-color:	#0F659C;
-	border:				1px solid white;
+
+p {
+	margin:				0px;
+	padding:			10px;
 }
-.menu td.menu-selected {
+
+.selected {
 	background-color:	#78B2D1;
 }
 
 .view {
-	padding-top:		20px;
+	height:				400px;
+	background:			url(view_bg.png) repeat-x;
+	position:			relative;
 }
 
 ul {
 	list-style-type:	none;
-}
-
-.list-item-small {
-	font-size:			13pt;
-	padding-top:		3px;
-	float:				right;
 }
 
 .contacts {
@@ -56,6 +62,37 @@ ul {
 }
 
 .preview {
-	width:				300px;
+	width:				250px;
 	margin:				10px;
+}
+
+textarea, input {
+	width:				90%;
+}
+
+.button {
+	background:			url(button.png) no-repeat;
+	width:				258px;
+	height:				48px;
+	text-align:			center;
+	padding:			10px 0px;
+	margin:				0px auto;
+	font-size:			1.3em;
+}
+
+#spacer {
+	height:				400px;
+	width:				100%;
+}
+
+.button-small {
+	background:			url(button_sm.png) no-repeat;
+	position:			absolute;
+	width:				100px;
+	height:				38px;
+	text-align:			center;
+	padding:			8px 0px;
+	font-size:			1.1em;
+	left:				10px;
+	bottom:				10px;
 }
