@@ -1,5 +1,6 @@
 body {
 	margin:				0px;
+	background-color:	#222222;
 }
 
 .body {
@@ -40,9 +41,11 @@ p {
 }
 
 .view {
-	height:				400px;
+	height:				0px;
+	overflow:			hidden;
 	background:			url(view_bg.png) repeat-x;
 	position:			relative;
+	display:			none;
 }
 
 ul {
