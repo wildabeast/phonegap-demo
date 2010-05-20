@@ -38,9 +38,13 @@ var changeView = function (e) {
 		
 		$("spacer").style.display = "block";
 		window.location = "#" + menuId;
+		alert(1);
 		$(viewId).style.display = "block";
+		alert(2);
 		emile(viewId, 'height:400px', {duration: 800});
+		alert(3);
 		setTimeout('$("spacer").style.display = "none";', 800);
+		alert(4);
 		current_menu = menuId;
 		current_view = viewId;
 	} catch (ex) { debug.log(ex.name + ": " + ex.message) }
@@ -72,8 +76,7 @@ function updateLocation(position) {
 	document.getElementById('speed').innerHTML = pt.speed;
 	var dt = new Date();
 	dt.setTime(position.timestamp);
-	document.getElementById('timestamp').innerHTML = dt.getHours() + ":" + 
-		dt.getMinutes() + ":" + dt.getSeconds();
+	document.getElementById('timestamp').innerHTML = dt.toLocaleTimeString();
 }
 
 function watchAccel() {
@@ -228,18 +231,23 @@ function soundCommand(cmd) {
 
 function checkStorage() {
 	var store = navigator.storage.getItem("store_test");
-	if (store) {
-		document.getElementById("storage_output").innerHTML = "You stored this: " + store;
+	if (store != null) {
+		document.getElementById("storage_output").innerHTML = "Found in data store: " + store;
+	} else {
+		document.getElementById("storage_output").innerHTML = "Nothing in data store.";
 	}
 }
 
 function testStorage(mode) {
 	try {
 		if (mode == 'store') {
-			navigator.storage.setItem("store_test", document.getElementById("storage_string").value);
+			var val = document.getElementById("storage_string").value;
+			navigator.storage.setItem("store_test", val);
+			document.getElementById("storage_output").innerHTML = "You stored: " + val;
 		}
 		else {
 			navigator.storage.removeItem("store_test");
+			document.getElementById("storage_output").innerHTML = "Storage cleared.";
 		}
 	} catch (ex) {
 		alert(ex.name + ": " + ex.message);
