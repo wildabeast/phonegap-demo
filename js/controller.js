@@ -38,13 +38,9 @@ var changeView = function (e) {
 		
 		$("spacer").style.display = "block";
 		window.location = "#" + menuId;
-		alert(1);
 		$(viewId).style.display = "block";
-		alert(2);
 		emile(viewId, 'height:400px', {duration: 800});
-		alert(3);
 		setTimeout('$("spacer").style.display = "none";', 800);
-		alert(4);
 		current_menu = menuId;
 		current_view = viewId;
 	} catch (ex) { debug.log(ex.name + ": " + ex.message) }
